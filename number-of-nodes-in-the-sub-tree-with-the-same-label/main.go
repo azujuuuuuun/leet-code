@@ -16,9 +16,6 @@ func countLabel(node int, parent int, adj [][]int, labels string, ansCounter *ma
 		for k, v := range lc {
 			labelCounter[k] += v
 		}
-		// for k, v := range ac {
-		// 	ansCounter[k] = v
-		// }
 	}
 
 	c := labelCounter[label]
