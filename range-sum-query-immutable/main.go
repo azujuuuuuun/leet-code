@@ -1,17 +1,20 @@
 type NumArray struct {
-	nums []int
+	total []int
 }
 
 func Constructor(nums []int) NumArray {
-	return NumArray{nums}
+	total := []int{nums[0]}
+	for i := 1; i < len(nums); i++ {
+		total = append(total, total[i-1]+nums[i])
+	}
+	return NumArray{total}
 }
 
 func (this *NumArray) SumRange(left int, right int) int {
-	sum := 0
-	for i := left; i <= right; i++ {
-		sum += this.nums[i]
+	if left == 0 {
+		return this.total[right]
 	}
-	return sum
+	return this.total[right] - this.total[left-1]
 }
 
 /**
