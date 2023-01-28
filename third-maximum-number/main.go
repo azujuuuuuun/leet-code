@@ -2,27 +2,46 @@ package main
 
 import (
 	"fmt"
-	"sort"
+	"math"
 )
 
 func thirdMax(nums []int) int {
-	numMap := map[int]int{}
+	if len(nums) == 1 {
+		return nums[0]
+	}
+	if len(nums) == 2 {
+		if nums[0] >= nums[1] {
+			return nums[0]
+		} else {
+			return nums[1]
+		}
+	}
 
+	first, second, third := math.MinInt, math.MinInt, math.MinInt
 	for i := 0; i < len(nums); i++ {
-		numMap[nums[i]]++
+		if nums[i] == first || nums[i] == second || nums[i] == third {
+			continue
+		}
+		if nums[i] > first {
+			first, second, third = nums[i], first, second
+			continue
+		}
+		if nums[i] > second {
+			second, third = nums[i], second
+			continue
+		}
+		if nums[i] > third {
+			third = nums[i]
+		}
 	}
 
-	distinctNums := []int{}
-	for k := range numMap {
-		distinctNums = append(distinctNums, k)
+	if first == second || second == third {
+		return first
 	}
-
-	sort.Ints(distinctNums)
-
-	if len(distinctNums) <= 2 {
-		return distinctNums[len(distinctNums)-1]
+	if first == math.MinInt || second == math.MinInt || third == math.MinInt {
+		return first
 	}
-	return distinctNums[len(distinctNums)-3]
+	return third
 }
 
 func main() {
