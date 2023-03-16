@@ -2,15 +2,22 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 func checkRecord(s string) bool {
-	if strings.Count(s, "A") >= 2 {
-		return false
+	aCnt := 0
+
+	for i, r := range s {
+		if string(r) == "A" {
+			aCnt++
+		}
+
+		if i+2 < len(s) && s[i:i+3] == "LLL" {
+			return false
+		}
 	}
 
-	if strings.Contains(s, "LLL") {
+	if aCnt >= 2 {
 		return false
 	}
 
