@@ -1,26 +1,15 @@
 function findSpecialInteger(arr: number[]): number {
   const countMap = new Map<number, number>();
-  let maxCount = 1;
-  let ans = arr[0];
-  countMap.set(ans, 1);
-  for (let i = 1; i < arr.length; i++) {
-    const elm = arr[i];
+  for (const elm of arr) {
     const count = countMap.get(elm);
-    if (count) {
-      countMap.set(elm, count + 1);
-      if (count + 1 > maxCount) {
-        maxCount = count + 1;
-        ans = elm;
-      }
-    } else {
-      countMap.set(elm, 1);
-      if (1 > maxCount) {
-        maxCount = 1;
-        ans = elm;
-      }
+    countMap.set(elm, count ? count + 1 : 1);
+  }
+  for (const [elm, count] of countMap.entries()) {
+    if (count > arr.length / 4) {
+      return elm;
     }
   }
-  return ans;
+  return -1;
 }
 
 console.log(findSpecialInteger([1, 2, 2, 6, 6, 6, 6, 7, 10]), 6);
