@@ -4,31 +4,30 @@ struct Solution {}
 
 impl Solution {
     pub fn find_missing_and_repeated_values(grid: Vec<Vec<i32>>) -> Vec<i32> {
-        let n = grid.len();
-        let max = n * n;
         let mut hash_map = HashMap::new();
-        for num in 1..max + 1 {
-            hash_map.insert(num as i32, 1);
-        }
         grid.iter().for_each(|row| {
             row.iter().for_each(|cell| {
-                let count = hash_map.get(cell).unwrap();
-                hash_map.insert(cell.to_owned(), count - 1);
+                match hash_map.get(cell) {
+                    Some(count) => hash_map.insert(cell, count + 1),
+                    None => hash_map.insert(cell, 1),
+                };
             });
         });
-        let twice_vec = hash_map
-            .iter()
-            .filter(|(_, v)| **v == -1)
-            .map(|(k, _)| k)
-            .collect::<Vec<_>>();
-        let twice = twice_vec.first().unwrap();
-        let missing_vec = hash_map
-            .iter()
-            .filter(|(_, v)| **v == 1)
-            .map(|(k, _)| k)
-            .collect::<Vec<_>>();
-        let missing = missing_vec.first().unwrap();
-        vec![**twice, **missing]
+        let n = grid.len() as i32;
+        let max = n * n;
+        let mut twice = 0;
+        let mut missing = 0;
+        for num in 1..max + 1 {
+            match hash_map.get(&num) {
+                Some(count) => {
+                    if *count == 2 {
+                        twice = num;
+                    }
+                }
+                None => missing = num,
+            }
+        }
+        vec![twice, missing]
     }
 }
 
