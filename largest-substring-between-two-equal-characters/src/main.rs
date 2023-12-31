@@ -1,17 +1,23 @@
+use std::collections::HashMap;
+
 struct Solution {}
 
 impl Solution {
     pub fn max_length_between_equal_characters(s: String) -> i32 {
         let mut max = -1;
-        for i in 0..s.len() - 1 {
-            for j in i + 1..s.len() {
-                let c1 = s.get(i..i + 1).unwrap();
-                let c2 = s.get(j..j + 1).unwrap();
-                if c1 == c2 && (j - 1 - i) as i32 > max {
-                    max = (j - 1 - i) as i32;
+        let mut hash_map = HashMap::new();
+        s.chars().enumerate().for_each(|(i, c)| {
+            match hash_map.get(&c) {
+                Some(first_index) => {
+                    if i as i32 - first_index - 1 > max {
+                        max = i as i32 - first_index - 1;
+                    }
                 }
-            }
-        }
+                None => {
+                    hash_map.insert(c, i as i32);
+                }
+            };
+        });
         max
     }
 }
