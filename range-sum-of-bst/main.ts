@@ -12,7 +12,7 @@ class TreeNode {
   }
 }
 
-function rangeSumBST(root: TreeNode | null, low: number, high: number): number {
+function bfs(root: TreeNode | null, low: number, high: number): number {
   if (!root) {
     return 0;
   }
@@ -35,6 +35,27 @@ function rangeSumBST(root: TreeNode | null, low: number, high: number): number {
     }
   }
   return sum;
+}
+
+function dfs(node: TreeNode | null, low: number, high: number): number {
+  if (!node) {
+    return 0;
+  }
+  let sum = 0;
+  if (node.val >= low && node.val <= high) {
+    sum += node.val;
+  }
+  if (node.left) {
+    sum += dfs(node.left, low, high);
+  }
+  if (node.right) {
+    sum += dfs(node.right, low, high);
+  }
+  return sum;
+}
+
+function rangeSumBST(root: TreeNode | null, low: number, high: number): number {
+  return dfs(root, low, high);
 }
 
 console.log(
