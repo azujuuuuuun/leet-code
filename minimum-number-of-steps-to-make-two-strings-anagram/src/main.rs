@@ -24,11 +24,11 @@ impl Solution {
             match t_char_counter.get(&k) {
                 Some(count) => {
                     if count < v {
-                        steps += *v - *count;
+                        steps += v - count;
                     }
                 }
                 None => {
-                    steps += *v;
+                    steps += v;
                 }
             };
         });
