@@ -17,20 +17,9 @@ function dfs(node: TreeNode | null, isLeft: boolean): number {
     return 0;
   }
   if (!node.left && !node.right) {
-    if (isLeft) {
-      return node.val;
-    } else {
-      return 0;
-    }
+    return isLeft ? node.val : 0;
   }
-  let sum = 0;
-  if (node.left) {
-    sum += dfs(node.left, true);
-  }
-  if (node.right) {
-    sum += dfs(node.right, false);
-  }
-  return sum;
+  return dfs(node.left, true) + dfs(node.right, false);
 }
 
 function sumOfLeftLeaves(root: TreeNode | null): number {
