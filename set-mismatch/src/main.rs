@@ -1,26 +1,24 @@
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 struct Solution {}
 
 impl Solution {
     pub fn find_error_nums(nums: Vec<i32>) -> Vec<i32> {
-        let mut map = HashMap::new();
+        let mut set = HashSet::new();
         for i in 1..nums.len() + 1 {
-            map.insert(i as i32, 0);
+            set.insert(i as i32);
         }
+        let mut duplicate = 0;
+        let mut missing = 0;
         nums.iter().for_each(|n| {
-            if let Some(count) = map.get(n) {
-                map.insert(*n, count + 1);
+            if let Some(_) = set.get(n) {
+                set.remove(n);
+            } else {
+                duplicate = *n;
             }
         });
-        let mut missing = 0;
-        let mut duplicate = 0;
-        map.iter().for_each(|(num, count)| {
-            if *count == 0 {
-                missing = *num;
-            } else if *count == 2 {
-                duplicate = *num;
-            }
+        set.iter().for_each(|n| {
+            missing = *n;
         });
         vec![duplicate, missing]
     }
