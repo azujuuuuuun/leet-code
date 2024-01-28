@@ -2,13 +2,25 @@ struct Solution {}
 
 impl Solution {
     pub fn sort_colors(nums: &mut Vec<i32>) {
-        for i in 0..nums.len() - 1 {
-            for j in i + 1..nums.len() {
-                if nums[i] > nums[j] {
-                    let tmp = nums[i];
-                    nums[i] = nums[j];
-                    nums[j] = tmp;
-                }
+        let mut count0 = 0;
+        let mut count1 = 0;
+        let mut count2 = 0;
+        nums.iter().for_each(|n| {
+            if *n == 0 {
+                count0 += 1;
+            } else if *n == 1 {
+                count1 += 1;
+            } else {
+                count2 += 1;
+            }
+        });
+        for i in 0..(count0 + count1 + count2) {
+            if i < count0 {
+                nums[i] = 0;
+            } else if i < count0 + count1 {
+                nums[i] = 1;
+            } else {
+                nums[i] = 2;
             }
         }
     }
