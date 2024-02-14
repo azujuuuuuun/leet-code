@@ -2,14 +2,16 @@ struct Solution {}
 
 impl Solution {
     pub fn rearrange_array(nums: Vec<i32>) -> Vec<i32> {
-        let positive = nums.iter().filter(|n| **n > 0).collect::<Vec<_>>();
-        let negative = nums.iter().filter(|n| **n < 0).collect::<Vec<_>>();
-        let mut array = vec![];
+        let mut array = vec![0; nums.len()];
+        let mut positive_index = 0;
+        let mut negative_index = 1;
         for i in 0..nums.len() {
-            if i % 2 == 0 {
-                array.push(*positive[i / 2]);
+            if nums[i] > 0 {
+                array[positive_index] = nums[i];
+                positive_index += 2;
             } else {
-                array.push(*negative[i / 2]);
+                array[negative_index] = nums[i];
+                negative_index += 2;
             }
         }
         array
