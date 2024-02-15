@@ -4,18 +4,13 @@ impl Solution {
     pub fn largest_perimeter(nums: Vec<i32>) -> i64 {
         let mut sorted = nums.clone();
         sorted.sort();
-        let mut sums = vec![];
         let mut sum: i64 = 0;
-        sorted.iter().for_each(|n| {
-            sum += *n as i64;
-            sums.push(sum);
-        });
         let mut perimeter: i64 = -1;
-        for i in (1..sorted.len()).rev() {
-            if sums[i - 1] > sorted[i] as i64 {
-                perimeter = sums[i];
-                break;
+        for i in 0..sorted.len() {
+            if i >= 2 && (sorted[i] as i64) < sum {
+                perimeter = sum + sorted[i] as i64;
             }
+            sum += sorted[i] as i64;
         }
         perimeter
     }
