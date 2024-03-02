@@ -19,8 +19,28 @@ impl Solution {
         // });
         // squares
 
-        let mut squares = nums.iter().map(|n| n * n).collect::<Vec<_>>();
-        squares.sort();
+        // let mut squares = nums.iter().map(|n| n * n).collect::<Vec<_>>();
+        // squares.sort();
+        // squares
+
+        let mut squares = vec![];
+        let mut li = 0;
+        let mut ri = nums.len() - 1;
+        loop {
+            if li > ri {
+                break;
+            }
+            let ls = nums[li] * nums[li];
+            let rs = nums[ri] * nums[ri];
+            if ls >= rs {
+                squares.push(ls);
+                li += 1;
+            } else {
+                squares.push(rs);
+                ri -= 1;
+            }
+        }
+        squares.reverse();
         squares
     }
 }
