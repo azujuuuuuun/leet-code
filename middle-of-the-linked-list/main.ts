@@ -11,19 +11,13 @@ class ListNode {
 }
 
 function middleNode(head: ListNode | null): ListNode | null {
-  let nodeNum = 0;
-  let node = head;
-  while (node !== null) {
-    node = node.next;
-    nodeNum++;
+  let fast = head;
+  let slow = head;
+  while (fast !== null && fast.next !== null && slow !== null) {
+    fast = fast.next.next;
+    slow = slow.next;
   }
-  node = head;
-  let count = 0;
-  while (count !== Math.floor(nodeNum / 2) && node !== null) {
-    node = node.next;
-    count++;
-  }
-  return node;
+  return slow;
 }
 
 const node4 = new ListNode(5);
